@@ -9,7 +9,7 @@ const MainContent: React.FC<MainContentProps> = ({
 }: MainContentProps) => {
   return (
     <>
-      <Container>{children}</Container>
+      <Container maxWidth="lg">{children}</Container>
     </>
   )
 }

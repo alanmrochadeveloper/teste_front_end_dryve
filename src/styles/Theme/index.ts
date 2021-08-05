@@ -9,5 +9,13 @@ export const theme = createTheme({
       main: '#f3f4f6',
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1200,
+      xl: 1920,
+    },
+  },
 })
-

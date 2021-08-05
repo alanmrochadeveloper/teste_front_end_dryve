@@ -20,8 +20,15 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
+import HomeIcon from '@material-ui/icons/Home'
+import PersonIcon from '@material-ui/icons/Person'
+import DriveEtaIcon from '@material-ui/icons/DriveEta'
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
+import VectorTriangle from '../../assets/ic-vector-triangle.svg'
+import Logo from '../../assets/dryve-logo.svg'
+import MainContent from '../MainContent'
+import { sideButtons } from '../../mock/DynamicItems/SideNavButtons'
+import { useHistory } from 'react-router-dom'
 
 const drawerWidth = 240
 
@@ -86,6 +93,9 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
+    icons: {
+      opacity: 0.55,
+    },
   }),
 )
 interface DashboardProps {
@@ -94,6 +104,8 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ children }) => {
   const classes = useStyles()
   const theme = useTheme()
+  const history = useHistory()
+  const [path, setPath] = React.useState<string>('')
   const [open, setOpen] = React.useState(false)
 
   const handleDrawerOpen = () => {
@@ -104,10 +116,31 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
     setOpen(false)
   }
 
+  const iconPicker = (iconValue: string) => {
+    switch (iconValue) {
+      case 'house':
+        return <HomeIcon />
+      case 'person':
+        return <PersonIcon />
+      case 'vehicles':
+        return <DriveEtaIcon />
+      case 'triangle':
+        return <img src={VectorTriangle} alt="triangle" />
+      case 'wallet':
+        return <AccountBalanceWalletIcon />
+      default:
+    }
+  }
+
+  React.useEffect(() => {
+    setPath(history.location.pathname)
+  }, [])
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
+        color="secondary"
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -125,9 +158,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Mini variant drawer
-          </Typography>
+          <img src={Logo} alt="Logo" />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -154,21 +185,20 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+          {sideButtons.map(({ text, url, icon }) => (
+            <ListItem
+              selected={url === path}
+              disabled={icon === 'wallet'}
+              button
+              key={text}
+              onClick={() => {
+                history.push(`${url}`)
+              }}
+            >
+              <ListItemIcon
+                className={icon !== 'triangle' ? classes.icons : ''}
+              >
+                {iconPicker(icon)}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -177,7 +207,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {children}
+        <MainContent>{children}</MainContent>
       </main>
     </div>
   )
