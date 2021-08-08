@@ -12,7 +12,7 @@ import CustomTable from '../CustomTable'
 
 const Main = styled.div`
   display: flex;
-  flex-grow: 1.68;
+  flex-grow: 1.88;
   flex-direction: column;
   min-width: 500px;
   height: 640px;
