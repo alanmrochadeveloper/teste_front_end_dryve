@@ -24,13 +24,17 @@ import HomeIcon from '@material-ui/icons/Home'
 import PersonIcon from '@material-ui/icons/Person'
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
-import VectorTriangle from '../../assets/ic-vector-triangle.svg'
-import Logo from '../../assets/dryve-logo.svg'
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
+import { ReactComponent as VectorTriangle } from '../../assets/ic-vector-triangle.svg'
+import { ReactComponent as VectorTriangleSelected } from '../../assets/ic-vector-triangle-selected.svg'
+import { ReactComponent as Logo } from '../../assets/dryve-logo.svg'
+import profilePicture from '../../assets/profile_picture4.jpg'
 import MainContent from '../MainContent'
 import { sideButtons } from '../../mock/DynamicItems/SideNavButtons'
 import { useHistory } from 'react-router-dom'
+import Box from '@material-ui/core/Box'
 
-const drawerWidth = 240
+let drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -76,9 +80,10 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
+      width: theme.spacing(7) + 8,
+      marginLeft: '-1rem',
       [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9) + 1,
+        width: theme.spacing(9) + 8,
       },
     },
     toolbar: {
@@ -90,11 +95,82 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
     },
     content: {
+      backgroundColor: '#f3f4f6',
       flexGrow: 1,
       padding: theme.spacing(3),
     },
+    backOffice: {
+      left: '0.3rem',
+      color: '#a5abb7',
+      position: 'relative',
+      textTransform: 'uppercase',
+      fontSize: '8px',
+      top: '-0.5rem',
+      letterSpacing: 'normal',
+      fontWeight: 500,
+      width: '59px',
+    },
     icons: {
       opacity: 0.55,
+    },
+    profilePicture: {
+      padding: 2,
+      margin: -4,
+      maxWidth: 50,
+      height: 50,
+      borderRadius: '50%',
+      border: `solid 2px ${theme.palette.primary.main}`,
+    },
+    profileInformation: {
+      justifyContent: 'flex-end',
+    },
+    profileListItem: {
+      paddingLeft: 0,
+      '&&:hover': {
+        backgroundColor: 'transparent',
+      },
+    },
+    profileName: {
+      display: 'flex',
+      fontSize: '14px',
+      fontWeight: 500,
+    },
+    logout: {
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: 10,
+      fontWeight: 500,
+      flexWrap: 'nowrap',
+      textTransform: 'uppercase',
+      letterSpacing: '1.5px',
+      color: 'rgba(0, 0, 0, 0.87)',
+      opacity: 0.5,
+      objectFit: 'contain',
+      lineHeight: 1,
+      height: 10,
+      '&&:hover': {
+        color: theme.palette.primary.main,
+        cursor: 'pointer',
+        opacity: 1,
+      },
+    },
+    powerIcon: {
+      width: 11,
+
+      height: 11,
+
+      objectFit: 'contain',
+    },
+    powerIconContainer: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    logoutWord: {
+      width: 29,
+
+      height: 10,
+      fontSize: 10,
+      margin: '5px 5px',
     },
   }),
 )
@@ -125,7 +201,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
       case 'vehicles':
         return <DriveEtaIcon />
       case 'triangle':
-        return <img src={VectorTriangle} alt="triangle" />
+        return <VectorTriangle />
       case 'wallet':
         return <AccountBalanceWalletIcon />
       default:
@@ -140,7 +216,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        color="secondary"
+        color="inherit"
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -158,10 +234,16 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <img src={Logo} alt="Logo" />
+          <Box>
+            <Logo />
+            <Box component="span" className={classes.backOffice}>
+              backoffice
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
+        style={{ marginLeft: `${!open ? '-1rem !important' : ''}` }}
         variant="permanent"
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
@@ -183,22 +265,75 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
             )}
           </IconButton>
         </div>
-        <Divider />
-        <List>
+        <List style={{ width: '100%' }}>
+          <ListItem key={'first'} className={classes.profileListItem}>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-start"
+              style={{ width: '100%' }}
+            >
+              <Box display="flex" alignItems="left">
+                <img
+                  className={classes.profilePicture}
+                  src={profilePicture}
+                  alt="profile"
+                  style={{
+                    marginLeft: `${open ? '0rem' : '0.5rem'}`,
+                    marginRight: 10,
+                  }}
+                />
+              </Box>
+              <Box
+                className={classes.profileInformation}
+                style={{
+                  display: `${open ? 'flex' : 'none'}`,
+                  flexDirection: 'column',
+                }}
+              >
+                <Box className={classes.profileName}>Vinicius Malara</Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  className={classes.logout}
+                >
+                  <Box
+                    // className={classes.powerIconContainer}
+                    component="span"
+                  >
+                    <PowerSettingsNewIcon className={classes.powerIcon} />
+                  </Box>
+                  <Box className={classes.logoutWord} component="span">
+                    sair
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
           {sideButtons.map(({ text, url, icon }) => (
             <ListItem
+              style={{
+                backgroundColor: `${!open ? 'transparent' : ''} `,
+                marginLeft: `${!open ? '0.3rem' : '0rem'}`,
+              }}
               selected={url === path}
               disabled={icon === 'wallet'}
-              button
+              button={open as any} // material ui got an issue open to solve this forced cast
               key={text}
               onClick={() => {
                 history.push(`${url}`)
               }}
             >
               <ListItemIcon
-                className={icon !== 'triangle' ? classes.icons : ''}
+                className={`${
+                  icon === 'triangle' ? 'triangle-icon' : classes.icons
+                }`}
               >
-                {iconPicker(icon)}
+                {icon === 'triangle' && url === path ? (
+                  <VectorTriangleSelected />
+                ) : (
+                  iconPicker(icon)
+                )}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
