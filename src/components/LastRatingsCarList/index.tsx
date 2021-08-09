@@ -7,12 +7,13 @@ import {
 import Box from '@material-ui/core/Box'
 import { ArrowRight } from '@material-ui/icons'
 import React from 'react'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
 import CustomTable from '../CustomTable'
 
 const Main = styled.div`
   display: flex;
-  flex-grow: 1.88;
+  flex-grow: 1.7;
   flex-direction: column;
   min-width: 500px;
   height: 640px;
@@ -67,6 +68,7 @@ const useStyles = makeStyles(() =>
 
 interface LastRatingsCarListProps {}
 const LastRatingsCarList: React.FC<LastRatingsCarListProps> = () => {
+  const history = useHistory()
   const classes = useStyles()
 
   return (
@@ -81,12 +83,13 @@ const LastRatingsCarList: React.FC<LastRatingsCarListProps> = () => {
           <Box className={classes.headerText}>Últimas avaliações</Box>
           <Box>
             <TextField
-              variant="outlined"
+              variant="standard"
               select
               defaultValue="Hoje"
               inputProps={{
                 className: classes.headerText,
               }}
+              InputProps={{ disableUnderline: true }}
             >
               <ListItem value="Hoje">Hoje</ListItem>
               <ListItem value="Ontem">Ontem</ListItem>
@@ -97,7 +100,13 @@ const LastRatingsCarList: React.FC<LastRatingsCarListProps> = () => {
         <CustomTable />
         <FooterWrapper>
           <Box display="flex" className={classes.showAll}>
-            <ShowAllText>Ver tudo</ShowAllText>
+            <ShowAllText
+              onClick={() => {
+                history.push('/veiculos')
+              }}
+            >
+              Ver tudo
+            </ShowAllText>
             <ArrowRight color="primary" />
           </Box>
         </FooterWrapper>

@@ -90,20 +90,28 @@ export const theme = createTheme({
         backgroundColor: 'white',
       },
     },
-    MuiOutlinedInput: {
-      notchedOutline: {
-        border: 'transparent',
-        backgroundColor: 'transparent',
-        '& $focused': {
-          borderWidth: 0,
-          border: 'transparent',
-        },
-      },
-    },
     MuiSelect: {
       select: {
         '&:focus': {
           backgroundColor: '',
+        },
+      },
+    },
+    MuiTab: {
+      textColorPrimary: {
+        '&$selected': {
+          color: '#6200ee',
+        },
+      },
+    },
+    MuiCssBaseline: {
+      '@global': {
+        '*': {
+          'scrollbar-width': 'medium',
+        },
+        '*::-webkit-scrollbar': {
+          width: '10px',
+          height: '10px',
         },
       },
     },

@@ -11,8 +11,6 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -25,6 +23,8 @@ import PersonIcon from '@material-ui/icons/Person'
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
+import SearchIcon from '@material-ui/icons/Search'
+import NotificationsIcon from '@material-ui/icons/Notifications'
 import { ReactComponent as VectorTriangle } from '../../assets/ic-vector-triangle.svg'
 import { ReactComponent as VectorTriangleSelected } from '../../assets/ic-vector-triangle-selected.svg'
 import { ReactComponent as Logo } from '../../assets/dryve-logo.svg'
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: theme.spacing(7) + 8,
+      width: theme.spacing(7) + 28,
       marginLeft: '-1rem',
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 8,
@@ -100,12 +100,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(3),
     },
     backOffice: {
-      left: '0.3rem',
+      padding: 5,
       color: '#a5abb7',
-      position: 'relative',
       textTransform: 'uppercase',
       fontSize: '8px',
-      top: '-0.5rem',
       letterSpacing: 'normal',
       fontWeight: 500,
       width: '59px',
@@ -115,7 +113,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     profilePicture: {
       padding: 2,
-      margin: -4,
       maxWidth: 50,
       height: 50,
       borderRadius: '50%',
@@ -210,7 +207,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
 
   React.useEffect(() => {
     setPath(history.location.pathname)
-  }, [])
+  }, [history.location.pathname])
 
   return (
     <div className={classes.root}>
@@ -234,10 +231,33 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Box>
-            <Logo />
-            <Box component="span" className={classes.backOffice}>
-              backoffice
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            style={{ width: '100%', minHeight: 70 }}
+          >
+            <Box
+              display="flex"
+              alignItems="flex-end"
+              justifyContent="left"
+              style={{ width: '100%' }}
+            >
+              <Logo display="flex" />
+              <Box display="flex" className={classes.backOffice}>
+                backoffice
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              style={{ minWidth: 62 }}
+            >
+              <SearchIcon style={{ opacity: 0.3, cursor: 'pointer' }} />
+              <NotificationsIcon
+                style={{ color: '#0065ff', opacity: 0.3, cursor: 'pointer' }}
+              />
             </Box>
           </Box>
         </Toolbar>
@@ -343,6 +363,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <MainContent>{children}</MainContent>
+        
       </main>
     </div>
   )

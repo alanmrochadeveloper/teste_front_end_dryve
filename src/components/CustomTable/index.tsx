@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { Box } from '@material-ui/core'
-import { carRows, ICar } from '../../mock/carList'
+import { carsList, ICar } from '../../mock/carList'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -115,7 +115,7 @@ const CustomTable: React.FC<CustomTableProps> = () => {
   }
 
   React.useEffect(() => {
-    setCars(carRows)
+    setCars(carsList)
     return () => {
       setCars([])
     }
@@ -137,7 +137,7 @@ const CustomTable: React.FC<CustomTableProps> = () => {
         </TableHead>
         <TableBody>
           {cars.map((row) => (
-            <TableRow key={row.title}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 <Box className={classes.innerTableCell}>
                   <Box
@@ -179,13 +179,13 @@ const CustomTable: React.FC<CustomTableProps> = () => {
                   <Box display="flex" flexDirection="column">
                     <Box className={classes.carInfo}>anúncio</Box>{' '}
                     <Box className={classes.carTitle} style={{ fontSize: 13 }}>
-                      {convertNumberToCurrency(row.announcePrice)}
+                      {convertNumberToCurrency(Number(row.announcePrice))}
                     </Box>
                   </Box>
                   <Box display="flex" flexDirection="column">
                     <Box className={classes.carInfo}>mínimo aceito</Box>
                     <Box className={classes.minPrice}>
-                      {convertNumberToCurrency(row.minPrice)}
+                      {convertNumberToCurrency(Number(row.minPrice))}
                     </Box>
                   </Box>
                 </Box>

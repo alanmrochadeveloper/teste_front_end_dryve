@@ -1,12 +1,8 @@
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import React from 'react'
 import styled from 'styled-components'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
-import { createStyles, makeStyles } from '@material-ui/styles'
-import { Theme } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import { theme } from '../../styles/Theme'
 
 const SummaryContainer = styled.div`
@@ -73,18 +69,6 @@ interface HomeHeaderSummaryProps {
   isPositive: boolean
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      backgroundColor: theme.palette.common.white, //teste
-      margin: theme.spacing(1),
-      padding: theme.spacing(1),
-    },
-    value: {
-      fontSize: 36,
-    },
-  }),
-)
 const HomeHeaderSummary: React.FC<HomeHeaderSummaryProps> = ({
   header,
   value,
@@ -93,7 +77,6 @@ const HomeHeaderSummary: React.FC<HomeHeaderSummaryProps> = ({
   porcentage = 0,
   isPositive = true,
 }) => {
-  const classes = useStyles()
   return (
     <>
       <SummaryContainer>

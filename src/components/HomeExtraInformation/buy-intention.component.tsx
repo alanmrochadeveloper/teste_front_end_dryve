@@ -52,7 +52,7 @@ const TableWrapper = styled.div`
 const useStyles = makeStyles(() =>
   createStyles({
     tableCell: {
-      padding: '14px 0px',
+      padding: '14.1px 0px',
     },
     title: {
       textTransform: 'capitalize',
@@ -106,7 +106,7 @@ const BuyIntention: React.FC<BuyIntentionProps> = () => {
                     quantity: 86,
                   },
                 ].map(({ imgUrl, title, quantity }) => (
-                  <TableRow>
+                  <TableRow key={title}>
                     <TableCell className={classes.tableCell}>
                       <Box
                         display="flex"
