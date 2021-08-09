@@ -107,7 +107,7 @@ export const theme = createTheme({
     MuiCssBaseline: {
       '@global': {
         '*': {
-          'scrollbar-width': 'medium',
+          'scrollbar-width': 'auto',
         },
         '*::-webkit-scrollbar': {
           width: '10px',
